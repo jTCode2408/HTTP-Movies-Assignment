@@ -15,10 +15,10 @@ const UpdateMovie = props =>{
 const [update, setUpdate]=useState(initalMovie);
 const {id} = useParams();
 
-setUpdate({
-    ...Movie,
-    [e.target.name] :value
-});
+// setUpdate({
+//     ...Movie,
+//     [e.target.name] :value
+// });
 
 const handleSubmit = e =>{
     e.preventDefault();
@@ -44,12 +44,12 @@ const handleSubmit = e =>{
                 <input
                 type="text"
                 name="id"
-                onChange={changeHandler}
+                // onChange={changeHandler}
                 placeholder="id"
                 value={update.id}
                 />
 
-
+            <button>Edit</button>
 
 
             </form>

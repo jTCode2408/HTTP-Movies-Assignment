@@ -1,6 +1,10 @@
 import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import UpdateMovie from './UpdateMovie';
+import {useParams } from 'react-router-dom';
+
 export default class Movie extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +35,15 @@ export default class Movie extends React.Component {
     addToSavedList(this.state.movie);
   };
 
+
+    // const updateMovie =this.props.updateMovie;
+    // updateMovie(this.state.movie);
+    updateMovie = event => {
+     const {id}= this.props.match.params.id
+      event.preventDefault();
+      this.props.history.push(`/update-movie/${id}`);
+    };
+  
   render() {
     if (!this.state.movie) {
       return <div>Loading movie information...</div>;
@@ -42,6 +55,9 @@ export default class Movie extends React.Component {
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div>
+        <Route path ="/update-movie/:id" render ={props=>( <UpdateMovie {...props} movie={this.state.movie}/>)}/>
+      <div className = "edit-button"> <button onClick ={this.updateMovie}>Edit</button></div>
+
       </div>
     );
   }
