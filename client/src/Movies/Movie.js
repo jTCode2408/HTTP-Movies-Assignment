@@ -3,7 +3,7 @@ import axios from "axios";
 import MovieCard from "./MovieCard";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import UpdateMovie from './UpdateMovie';
-import {useParams } from 'react-router-dom';
+
 
 export default class Movie extends React.Component {
   constructor(props) {
@@ -36,13 +36,20 @@ export default class Movie extends React.Component {
   };
 
 
-    // const updateMovie =this.props.updateMovie;
+    
+  handleUpdate =e =>{
+    const updateMovie =this.props.updateMovie;
     // updateMovie(this.state.movie);
-    updateMovie = event => {
-     const {id}= this.props.match.params.id
-      event.preventDefault();
-      this.props.history.push(`/update-movie/${id}`);
-    };
+    e.preventDefault();
+    this.props.history.push(`/update-movie/${e.id}`)
+  }
+    // updateMovie = (event) => {
+    //  const {id}= this.props.match.params.id
+    //   event.preventDefault();
+    //   this.props.history.push(`/update-movie/${id}`);
+    //   const editMovie =this.props.editMovie;
+    // editMovie(this.state.movie);
+    // };
   
   render() {
     if (!this.state.movie) {
@@ -56,7 +63,7 @@ export default class Movie extends React.Component {
           Save
         </div>
         <Route path ="/update-movie/:id" render ={props=>( <UpdateMovie {...props} movie={this.state.movie}/>)}/>
-      <div className = "edit-button"> <button onClick ={this.updateMovie}>Edit</button></div>
+      <div className = "edit-button"> <button onClick ={this.handleUpdate}>Edit</button></div>
 
       </div>
     );
