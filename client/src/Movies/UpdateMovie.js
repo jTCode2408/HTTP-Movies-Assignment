@@ -1,108 +1,70 @@
 //form to update movie via put req
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react'
 import axios from 'axios';
-import {useParams, useHistory} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom'
 
+export default function UpdateMovie() {
+    const {id} = useParams();
+    const history = useHistory();
 
+    useEffect(()=>{
+        if (id){
+            axios.get(`http://localhost:5000/api/movies/${id}`)
+            .then(res=>{
+                setMovie(res.data)
+                
+            })
+            .catch(err=>console.log(err))
+        }
+        
+    }, [id])
 
-const initialItem = {
-    id: '',
-title:'',
-director: '',
-metascore: '',
-stars: []
-  };
-  
-  const UpdateMovie = props => {
-    const [movie, setMovie] = useState(initialItem);
-    const { id } = useParams();
-  
-    // useEffect(() => {
-    //   const itemToUpdate = movie.find(thing => `${thing.id}` === id);
-  
-    //   if (itemToUpdate) {
-    //     setMovie(itemToUpdate);
-    //   }
-    // }, [props.movie, id]);
-  
-    const handleChange = ev => {
-      ev.persist();
-      let value = ev.target.value;
-      if (ev.target.name === 'price') {
-        value = parseInt(value, 10);
-      }
-  
-      setMovie({
-        ...movie,
-        [ev.target.name]: value
-      });
-    };
-  
-    const handleSubmit = e => {
-      e.preventDefault();
-      // make a PUT request to edit the item
-      axios
-        .put(`http://localhost:5000/api/movies/${id}`, movie)
-        .then(res => {
-          // res.data is the FULL array with the updated item
-          // That's not always the case. Sometimes you need to build your
-          // own updated array
-          props.setMovie(res.data);
-          props.history.push(`/`);
+    const [movie, setMovie] = useState({
+            id: '',
+            title:'',
+            director: '',
+            metascore: '',
+            stars: []
         })
-        .catch(err => console.log(err));
-    };
-
-    return(
-        <div>
-            <h1>
-                Update Movie Info
-            </h1>
-
-            <form onSubmit ={handleSubmit}>
-                {/* <input
-                type="text"
-                name="movie"
-                onChange={changeHandler}
-                placeholder="movie"
-                value={update.movie}
-                /> */}
- <input
-                type="text"
-                name="title"
-                onChange={handleChange}
-                placeholder="title"
-                value={movie.title}
-                />
-                 <input
-                type="text"
-                name="director"
-                onChange={handleChange}
-                placeholder="director"
-                value={movie.director}
-                />
-                 <input
-                type="text"
-                name="metascore"
-                onChange={handleChange}
-                placeholder="metascore"
-                value={movie.metascore}
-                />
-                 <input
-                type="text"
-                name="stars"
-                onChange={handleChange}
-                placeholder="stars"
-                value={movie.stars}
-                />
-
-            <button>Edit</button>
 
 
-            </form>
-        </div>
+    const handleChange = e => {
+        if (e.target.name !== 'stars'){
+            setMovie({
+                ...movie,
+                [e.target.name]: e.target.value,
+            })
+        } else {        
+            setMovie({
+                ...movie,
+                stars: [...e.target.value.split(",")]
+            })
+        }
+    }
+
+
+
+
+    const onSubmit = e => {
+
+        axios.put(`http://localhost:5000/api/movies/${movie.id}`, movie)
+            .then(res=>console.log(res))
+            .catch(err=>console.log(err))
+
+           history.push('/')
+
+    }
+
+
+    return (
+        <form onSubmit={onSubmit}>
+            <input name='title' placeholder='title' onChange={handleChange} value={movie.title}/>
+            <input name='director' placeholder='director' onChange={handleChange} value={movie.director}/>
+            <input name='metascore' placeholder='metascore' onChange={handleChange} value={movie.metascore}/>
+            <input name='stars' placeholder='stars' onChange={handleChange} value={movie.stars}/>
+            <button>Submit</button>
+        </form>
     )
-
 }
 
-export default UpdateMovie;
+

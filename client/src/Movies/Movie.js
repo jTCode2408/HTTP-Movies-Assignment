@@ -1,15 +1,14 @@
 import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 import UpdateMovie from './UpdateMovie';
-
 
 export default class Movie extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      movie: null
+      movie: null,
+      isEditing: false
     };
   }
 
@@ -35,43 +34,43 @@ export default class Movie extends React.Component {
     addToSavedList(this.state.movie);
   };
 
-
-    
-  handleUpdate =() =>{
-    const updateMovie =this.props.updateMovie;
-    // updateMovie(this.state.movie);
+  editMovie = () => {
+    this.setState({
+      ...this.state,
+      isEditing: !this.state.isEditing
+    })
+    console.log(this.state.isEditing)
     this.props.history.push(`/update-movie/${this.state.movie.id}`)
   }
-  handleDelete = ()=> {
-    axios
-      .delete(`http://localhost:5000/api/movies/${this.state.movie.id}`)
-      .then(res => {
-        console.log('DELETE RES', res)
-        this.props.history.push('/');
-      })
-      .catch(err => console.log(err));
-  };
-  
+
+  deleteMovie = () => {
+    axios.delete(`http://localhost:5000/api/movies/${this.state.movie.id}`)
+      .then(res=>this.props.history.push('/'))
+      .catch(err=>console.log(err))
+  }
+
   render() {
     if (!this.state.movie) {
       return <div>Loading movie information...</div>;
     }
 
     return (
+      <div>
+
+      
       <div className="save-wrapper">
         <MovieCard movie={this.state.movie} />
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div>
-        <div className ="edit-button" onClick={this.handleUpdate}>
-        Edit
+        <div className="edit-button" onClick={this.editMovie}>
+          Edit
+        </div>
+        <div className="delete-button" onClick={this.deleteMovie}>
+          Delete
+        </div>
       </div>
-      <div className ="delete-button" onClick={this.handleDelete}>
-        Delete
-      </div>
-
       </div>
     );
-   
   }
 }
