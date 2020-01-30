@@ -37,19 +37,20 @@ export default class Movie extends React.Component {
 
 
     
-  handleUpdate =e =>{
+  handleUpdate =() =>{
     const updateMovie =this.props.updateMovie;
     // updateMovie(this.state.movie);
-    e.preventDefault();
-    this.props.history.push(`/update-movie/${e.id}`)
+    this.props.history.push(`/update-movie/${this.state.movie.id}`)
   }
-    // updateMovie = (event) => {
-    //  const {id}= this.props.match.params.id
-    //   event.preventDefault();
-    //   this.props.history.push(`/update-movie/${id}`);
-    //   const editMovie =this.props.editMovie;
-    // editMovie(this.state.movie);
-    // };
+  handleDelete = ()=> {
+    axios
+      .delete(`http://localhost:5000/api/movies/${this.state.movie.id}`)
+      .then(res => {
+        console.log('DELETE RES', res)
+        this.props.history.push('/');
+      })
+      .catch(err => console.log(err));
+  };
   
   render() {
     if (!this.state.movie) {
@@ -62,10 +63,15 @@ export default class Movie extends React.Component {
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div>
-        <Route path ="/update-movie/:id" render ={props=>( <UpdateMovie {...props} movie={this.state.movie}/>)}/>
-      <div className = "edit-button"> <button onClick ={this.handleUpdate}>Edit</button></div>
+        <div className ="edit-button" onClick={this.handleUpdate}>
+        Edit
+      </div>
+      <div className ="delete-button" onClick={this.handleDelete}>
+        Delete
+      </div>
 
       </div>
     );
+   
   }
 }
