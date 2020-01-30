@@ -8,7 +8,7 @@ export default class Movie extends React.Component {
     super(props);
     this.state = {
       movie: null,
-      isEditing: false
+      editing: false
     };
   }
 
@@ -37,9 +37,9 @@ export default class Movie extends React.Component {
   editMovie = () => {
     this.setState({
       ...this.state,
-      isEditing: !this.state.isEditing
+      editing: !this.state.editing
     })
-    console.log(this.state.isEditing)
+    console.log(this.state.editing)
     this.props.history.push(`/update-movie/${this.state.movie.id}`)
   }
 

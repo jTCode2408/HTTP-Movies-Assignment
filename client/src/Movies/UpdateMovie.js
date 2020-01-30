@@ -43,8 +43,6 @@ export default function UpdateMovie() {
     }
 
 
-
-
     const onSubmit = e => {
 
         axios.put(`http://localhost:5000/api/movies/${movie.id}`, movie)
@@ -52,16 +50,30 @@ export default function UpdateMovie() {
             .catch(err=>console.log(err))
 
            history.push('/')
-
     }
-
 
     return (
         <form onSubmit={onSubmit}>
-            <input name='title' placeholder='title' onChange={handleChange} value={movie.title}/>
-            <input name='director' placeholder='director' onChange={handleChange} value={movie.director}/>
-            <input name='metascore' placeholder='metascore' onChange={handleChange} value={movie.metascore}/>
-            <input name='stars' placeholder='stars' onChange={handleChange} value={movie.stars}/>
+            <input name='title' 
+            placeholder='title' 
+            onChange={handleChange} 
+            value={movie.title}
+            />
+            <input name='director' 
+            placeholder='director' 
+            onChange={handleChange} 
+            value={movie.director}
+            />
+            <input name='metascore' 
+            placeholder='metascore' 
+            onChange={handleChange} 
+            value={movie.metascore}
+            />
+            <input name='stars' 
+            placeholder='stars' 
+            onChange={handleChange} 
+            value={movie.stars}
+            />
             <button>Submit</button>
         </form>
     )
