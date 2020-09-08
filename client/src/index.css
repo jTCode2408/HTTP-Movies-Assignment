@@ -1,24 +1,37 @@
 body {
-  margin: 0;
-  padding: 0;
+  box-sizing: border-box;
   font-family: sans-serif;
-  background-color: #f2f2f2;
+  background-image: url('./images/film-roll.jpg');
+  background-size: cover;
+  background-position: center;
+  display:flex;
+  justify-content: center;
+ 
+  
 }
 
+h2{
+  color:green;
+}
 .movie-card {
-  background-color: #fff;
-  border: 0;
+  border: 2px solid #e0e0e0;
   box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0, 0, 0, 0.12),
     0 2px 4px rgba(0, 0, 0, 0.24);
   padding: 1rem;
   cursor: pointer;
   position: relative;
   margin: 1rem auto;
+  color:red;
+  text-decoration: none;
+  text-decoration-style: none;
+  
 }
 
 .movie-director {
   padding: 4px 0;
   font-size: 0.8rem;
+  text-decoration: underline;
+  text-decoration-color: black;
 }
 
 .saved-list {
@@ -62,6 +75,36 @@ body {
   background-color: lightseagreen;
 }
 .save-button:hover {
+  background-color: green;
+  color: white;
+}
+
+.edit-button{
+  position: absolute;
+  top: 65px;
+  right: 25px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: lightseagreen;
+
+}
+
+.edit-button:hover{
+  background-color: green;
+  color: white;
+}
+
+.delete-button{
+  position: absolute;
+  top: 105px;
+  right: 25px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: lightseagreen;
+}
+
+
+.delete-button:hover{
   background-color: green;
   color: white;
 }

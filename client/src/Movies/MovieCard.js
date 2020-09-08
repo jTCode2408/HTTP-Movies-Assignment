@@ -12,9 +12,12 @@ const MovieCard = props => {
         Metascore: <strong>{metascore}</strong>
       </div>
       <h3>Actors</h3>
+      <div key={stars} className="movie-star">
+          {stars}
+        </div>
 
       {stars.map(star => (
-        <div key={star} className="movie-star">
+        <div  className="movie-star">
           {star}
         </div>
       ))}
